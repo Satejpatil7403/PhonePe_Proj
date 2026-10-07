@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - PhonePe Insights Analyzer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script defer src="https://cdn.vercel-insights.com/v1/script.debug.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 3-Panel Layout -->
+        <div class="dashboard-layout">
+            <!-- LEFT PANEL: Summary Metrics -->
+            <div class="left-panel">
+                <h2 class="panel-title">Financial Summary</h2>
+                
+                <div class="metric-card">
+                    <div class="metric-label">Total Spent</div>
+                    <div class="metric-value text-danger">₹{{ "%.2f"|format(insights.total_debit) }}</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-label">Total Received</div>
+                    <div class="metric-value">₹{{ "%.2f"|format(insights.total_credit) }}</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-label">Net Balance</div>
+                    <div class="metric-value {% if insights.net_flow >= 0 %}text-success{% else %}text-danger{% endif %}">
+                        ₹{{ "%.2f"|format(insights.net_flow) }}
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-label">Avg. Transaction</div>
+                    <div class="metric-value text-warning">₹{{ "%.2f"|format(insights.average_debit) }}</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-label">Total Transactions</div>
+                    <div class="metric-value">{{ insights.transaction_count }}</div>
+                </div>
+
+                <!-- Export Actions -->
+                <div class="export-actions">
+                    <button class="btn btn-primary" onclick="exportToCSV()">Export CSV</button>
+                    <a href="{{ url_for('upload') }}" class="btn btn-warning">New Upload</a>
+                </div>
+            </div>
+
+            <!-- MIDDLE PANEL: Main Content -->
+            <div class="middle-panel">
+                <h2 class="panel-title">Transaction Overview</h2>
+
+                <!-- All Transactions Table -->
+                <div class="card">
+                    <h3 class="card-title">Recent Transactions</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Merchant</th>
+                                    <th class="hide-mobile-col">Category</th>
+                                    <th class="text-right">Amount</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for txn in transactions[:20] %}
+                                <tr>
+                                    <td>{{ txn.date }}</td>
+                                    <td class="merchant-name">{{ txn.merchant[:30] }}</td>
+                                    <td class="hide-mobile-col">
+                                        <span class="badge category-{{ txn.category }}">{{ txn.category }}</span>
+                                    </td>
+                                    <td class="text-right">
+                                        {% if txn.type == 'debit' %}
+                                        <span class="amount-debit">₹{{ "%.2f"|format(txn.amount) }}</span>
+                                        {% else %}
+                                        <span class="amount-credit">₹{{ "%.2f"|format(txn.amount) }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="/transaction/{{ loop.index0 }}" class="btn-view-details">View</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL: Categories & Insights -->
+            <div class="right-panel">
+                <h2 class="panel-title">Category Breakdown</h2>
+                
+                <ul class="category-list">
+                    {% for cat in insights.top_categories[:8] %}
+                    <li class="category-item">
+                        <span class="category-name">
+                            <span class="badge category-{{ cat.category }}" style="margin-right: 8px; font-size: 0.7rem;">
+                                {{ cat.category }}
+                            </span>
+                        </span>
+                        <span class="category-amount">₹{{ "%.2f"|format(cat.total_amount) }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <!-- Anomalies -->
+                {% if insights.anomalies %}
+                <div class="card" style="background: rgba(239, 68, 68, 0.1); border-color: var(--red-primary);">
+                    <h4 class="card-title text-danger">Unusual Transactions</h4>
+                    {% for anomaly in insights.anomalies[:3] %}
+                    <div style="padding: 0.5rem 0; border-bottom: 1px solid var(--border);">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">{{ anomaly.merchant[:25] }}</div>
+                        <div style="font-weight: 600; color: var(--red-primary);">₹{{ "%.2f"|format(anomaly.amount) }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Top Merchants -->
+                <div class="card">
+                    <h4 class="card-title">Top Merchants</h4>
+                    {% for merchant in insights.top_merchants[:5] %}
+                    <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border);">
+                        <span style="font-size: 0.85rem; color: var(--text-secondary);">{{ merchant.merchant[:20] }}</span>
+                        <span style="font-weight: 600; color: var(--green-primary);">₹{{ "%.2f"|format(merchant.total_amount) }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Export function
+        function exportToCSV() {
+            const data = {{ transactions | tojson }};
+            let csv = 'Date,Time,Merchant,Category,Type,Amount\n';
+            data.forEach(txn => {
+                csv += `${txn.date},${txn.time},${txn.merchant},${txn.category},${txn.type},${txn.amount}\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'phonepe_transactions.csv';
+            a.click();
+        }
+    </script>
+</body>
+</html>

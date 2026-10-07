@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Analyzer - Smart Financial Insights</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+    <script defer src="https://cdn.vercel-insights.com/v1/script.debug.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                    <rect width="40" height="40" rx="8" fill="#2563eb"/>
+                    <path d="M20 10v20M10 20h20" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="20" cy="20" r="6" stroke="white" stroke-width="2" fill="none"/>
+                </svg>
+                <span class="logo-text">Transaction Analyzer</span>
+            </div>
+            <nav class="nav">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#security" class="nav-link">Security</a>
+                <a href="{{ url_for('upload') }}" class="btn-nav">Get Started</a>
+            </nav>
+            <button class="hamburger-menu" id="hamburgerMenu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+        <div class="mobile-nav-content">
+            <button class="mobile-nav-close" id="closeNav">&times;</button>
+            <nav class="mobile-nav">
+                <a href="#features" class="mobile-nav-link">Features</a>
+                <a href="#how-it-works" class="mobile-nav-link">How It Works</a>
+                <a href="#security" class="mobile-nav-link">Security</a>
+                <a href="{{ url_for('upload') }}" class="mobile-nav-button">Get Started</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background">
+            <div class="hero-circle hero-circle-1"></div>
+            <div class="hero-circle hero-circle-2"></div>
+            <div class="hero-grid"></div>
+        </div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    100% Privacy Guaranteed
+                </div>
+                <h1 class="hero-title">
+                    Transform Your Finances Into<br>
+                    <span class="gradient-text">Actionable Insights</span>
+                </h1>
+                <p class="hero-subtitle">Analyze your PhonePe transactions instantly with advanced local processing.<br>No sign-ups, no cloud uploads, no compromise on privacy.</p>
+                <div class="hero-buttons">
+                    <a href="{{ url_for('upload') }}" class="btn-hero-primary">
+                        Start Analyzing Now
+                    </a>
+                    <a href="#how-it-works" class="btn-hero-secondary">
+                        Watch Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-bg-image">
+            <img src="https://cdn.pixabay.com/photo/2019/08/09/18/08/rupee-4395553_1280.jpg" alt="Financial Analytics Background" loading="lazy">
+        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="hero-bg-image">
+            <img src="https://cdn.pixabay.com/photo/2019/08/09/18/08/rupee-4395553_1280.jpg" alt="Financial Analytics Background" loading="lazy">
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-badge">Features</span>
+                <h2 class="section-title">Powerful Financial Intelligence</h2>
+                <p class="section-subtitle">Everything you need to take control of your spending habits and make informed financial decisions</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon icon-blue">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 11l3 3L22 4"/>
+                            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Smart Categorization</h3>
+                    <p class="feature-description">Advanced pattern recognition automatically organizes your transactions into meaningful categories like food, shopping, travel, utilities, and entertainment—saving you hours of manual work.</p>
+                    <div class="feature-tags">
+                        <span class="tag">AI-Free</span>
+                        <span class="tag">Accurate</span>
+                    </div>
+                </div>
+                <div class="feature-card featured">
+                    <div class="featured-badge">Most Popular</div>
+                    <div class="feature-icon icon-green">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Privacy First</h3>
+                    <p class="feature-description">Your financial data never leaves your device. 100% local processing means zero external API calls, no cloud storage, and complete control over your sensitive information.</p>
+                    <div class="feature-tags">
+                        <span class="tag">Local Only</span>
+                        <span class="tag">No Tracking</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-orange">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 3v18h18"/>
+                            <path d="M18 17V9l-5 5-4-4-2 2"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Visual Insights</h3>
+                    <p class="feature-description">Transform raw numbers into actionable insights with beautiful, interactive charts. Spot trends, compare categories, and understand your financial story at a glance.</p>
+                    <div class="feature-tags">
+                        <span class="tag">Interactive</span>
+                        <span class="tag">Real-time</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-purple">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Export Anywhere</h3>
+                    <p class="feature-description">Take your data with you. Export detailed reports in CSV or JSON format for spreadsheet analysis, tax preparation, or integration with your favorite financial tools.</p>
+                    <div class="feature-tags">
+                        <span class="tag">CSV</span>
+                        <span class="tag">JSON</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-red">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Anomaly Detection</h3>
+                    <p class="feature-description">Stay alert to unusual activity. Our algorithm automatically flags transactions that are significantly higher than your average spending, helping you catch errors or unexpected charges.</p>
+                    <div class="feature-tags">
+                        <span class="tag">Smart Alerts</span>
+                        <span class="tag">Automatic</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-blue">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2"/>
+                            <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Merchant Intelligence</h3>
+                    <p class="feature-description">Discover your spending patterns by merchant. See your top vendors, track recurring payments, and identify opportunities to cut costs or negotiate better deals.</p>
+                    <div class="feature-tags">
+                        <span class="tag">Top 10</span>
+                        <span class="tag">Trends</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Simple. Fast. Secure.</h2>
+                <p class="section-subtitle">Get insights in three easy steps</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <div class="step-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                        </svg>
+                    </div>
+                    <h3 class="step-title">Upload Your PDF</h3>
+                    <p class="step-description">Simply drag and drop your PhonePe transaction statement. PDF files are processed instantly.</p>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <div class="step-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24"/>
+                        </svg>
+                    </div>
+                    <h3 class="step-title">Automatic Analysis</h3>
+                    <p class="step-description">Our local algorithm extracts and categorizes all transactions without sending data anywhere.</p>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <div class="step-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 3v18h18"/>
+                            <path d="M18 17l-5-5-4 4-2-2"/>
+                        </svg>
+                    </div>
+                    <h3 class="step-title">View Insights</h3>
+                    <p class="step-description">Explore your financial dashboard with detailed breakdowns, trends, and actionable insights.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Section -->
+    <section id="security" class="security">
+        <div class="section-container">
+            <div class="security-content">
+                <div class="security-text">
+                    <h2 class="section-title">Your Data Stays With You</h2>
+                    <p class="security-description">We take your privacy seriously. Unlike other financial tools, Transaction Analyzer processes everything locally on your device.</p>
+                    <ul class="security-features">
+                        <li class="security-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                            <span>No external API calls or cloud processing</span>
+                        </li>
+                        <li class="security-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                            <span>No LLM or AI model access to your transactions</span>
+                        </li>
+                        <li class="security-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                            <span>Files are deleted immediately after processing</span>
+                        </li>
+                        <li class="security-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                            <span>No tracking, no analytics, no data collection</span>
+                        </li>
+                    </ul>
+                    <a href="{{ url_for('upload') }}" class="btn-security">Start Analyzing Now</a>
+                </div>
+                <div class="security-visual">
+                    <div class="shield-container">
+                        <svg width="200" height="240" viewBox="0 0 200 240" fill="none">
+                            <path d="M100 10L180 50V110C180 170 140 220 100 230C60 220 20 170 20 110V50L100 10Z" fill="url(#shield-gradient)" stroke="#2563eb" stroke-width="4"/>
+                            <path d="M70 110L90 130L130 90" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                            <defs>
+                                <linearGradient id="shield-gradient" x1="100" y1="10" x2="100" y2="230" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#2563eb" stop-opacity="0.2"/>
+                                    <stop offset="1" stop-color="#2563eb" stop-opacity="0.05"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-container">
+            <h2 class="cta-title">Ready to Understand Your Finances?</h2>
+            <p class="cta-subtitle">Start analyzing your transactions in seconds. No sign-up required.</p>
+            <a href="{{ url_for('upload') }}" class="btn-cta">Get Started Free</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                            <rect width="40" height="40" rx="8" fill="#2563eb"/>
+                            <path d="M20 10v20M10 20h20" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="20" cy="20" r="6" stroke="white" stroke-width="2" fill="none"/>
+                        </svg>
+                        <span class="logo-text">Transaction Analyzer</span>
+                    </div>
+                    <p class="footer-description">Privacy-first financial insights for PhonePe transactions. Your data stays on your device, always.</p>
+                    <div class="footer-badges">
+                        <span class="footer-badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                            100% Private
+                        </span>
+                        <span class="footer-badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                            No LLM
+                        </span>
+                        <span class="footer-badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            Local Processing
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Transaction Analyzer. Built with privacy in mind.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger Menu Toggle
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        const closeNav = document.getElementById('closeNav');
+        
+        // Open menu
+        hamburgerMenu.addEventListener('click', () => {
+            hamburgerMenu.classList.add('active');
+            mobileNavOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Close menu
+        const closeMenu = () => {
+            hamburgerMenu.classList.remove('active');
+            mobileNavOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        closeNav.addEventListener('click', closeMenu);
+        
+        // Close when clicking overlay background
+        mobileNavOverlay.addEventListener('click', (e) => {
+            if (e.target === mobileNavOverlay) {
+                closeMenu();
+            }
+        });
+
+        // Close menu when clicking on a link
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link, .mobile-nav-button');
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && href !== '') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

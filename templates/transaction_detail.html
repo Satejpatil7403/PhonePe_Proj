@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Details - PhonePe Insights Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.vercel-insights.com/v1/script.debug.js"></script>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="topbar">
+        <div class="container">
+            <div class="topbar-content">
+                <h1 class="topbar-title">Transaction Details</h1>
+                <div class="topbar-actions">
+                    <a href="{{ url_for('dashboard') }}">← Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container" style="padding-top: 30px; padding-bottom: 60px;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <!-- Transaction Summary Card -->
+            <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-bottom: 30px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Transaction Amount</p>
+                        <h1 style="margin: 8px 0 0 0; color: white; font-size: 3rem;">
+                            ₹{{ "%.2f"|format(transaction.amount) }}
+                        </h1>
+                    </div>
+                    <div>
+                        <span class="badge" style="font-size: 1rem; padding: 8px 16px; background: rgba(255,255,255,0.2); color: white;">
+                            {{ transaction.direction | upper }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Transaction Details -->
+            <div class="card">
+                <h2 class="card-title">Transaction Information</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                    <!-- Date & Time -->
+                    <div>
+                        <label style="display: block; font-size: 0.875rem; color: #666; margin-bottom: 4px;">
+                            Date
+                        </label>
+                        <p style="font-size: 1.1rem; font-weight: 500; margin: 0;">
+                            {{ transaction.date or 'N/A' }}
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <label style="display: block; font-size: 0.875rem; color: #666; margin-bottom: 4px;">
+                            Time
+                        </label>
+                        <p style="font-size: 1.1rem; font-weight: 500; margin: 0;">
+                            {{ transaction.time or 'N/A' }}
+                        </p>
+                    </div>
+                    
+                    <!-- Merchant -->
+                    <div style="grid-column: 1 / -1;">
+                        <label style="display: block; font-size: 0.875rem; color: #666; margin-bottom: 4px;">
+                            Merchant / Recipient
+                        </label>
+                        <p style="font-size: 1.1rem; font-weight: 500; margin: 0;">
+                            {{ transaction.merchant }}
+                        </p>
+                    </div>
+                    
+                    <!-- Transaction Type -->
+                    <div>
+                        <label style="display: block; font-size: 0.875rem; color: #666; margin-bottom: 4px;">
+                            Transaction Type
+                        </label>
+                        <p style="margin: 0;">
+                            <span class="badge badge-{{ transaction.direction }}">
+                                {{ transaction.direction | capitalize }}
+                            </span>
+                        </p>
+                    </div>
+                    
+                    <!-- Category -->
+                    <div>
+                        <label style="display: block; font-size: 0.875rem; color: #666; margin-bottom: 4px;">
+                            Category
+                        </label>
+                        <p style="margin: 0;">
+                            <span class="badge badge-category">
+                                {{ transaction.category }}
+                            </span>
+                        </p>
+                    </div>
+                    
+                    <!-- Account Reference -->
+                    <div>
+                        <label style="display: block; font-size: 0.875rem; color: #666; margin-bottom: 4px;">
+                            Account Reference
+                        </label>
+                        <p style="font-size: 1rem; font-weight: 500; margin: 0; font-family: monospace;">
+                            {{ transaction.account_reference or 'N/A' }}
+                        </p>
+                    </div>
+                    
+                    <!-- Transaction ID -->
+                    <div>
+                        <label style="display: block; font-size: 0.875rem; color: #666; margin-bottom: 4px;">
+                            Transaction ID
+                        </label>
+                        <p style="font-size: 0.9rem; margin: 0; font-family: monospace; word-break: break-all;">
+                            {{ transaction.transaction_id or 'N/A' }}
+                        </p>
+                    </div>
+                    
+                    <!-- UTR Number -->
+                    <div style="grid-column: 1 / -1;">
+                        <label style="display: block; font-size: 0.875rem; color: #666; margin-bottom: 4px;">
+                            UTR Number
+                        </label>
+                        <p style="font-size: 0.9rem; margin: 0; font-family: monospace; word-break: break-all;">
+                            {{ transaction.utr_number or 'N/A' }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Category Update -->
+            <div class="card">
+                <h2 class="card-title">Update Category</h2>
+                <p style="color: #666; margin-bottom: 20px;">
+                    Change the category for this transaction if it was incorrectly classified.
+                </p>
+                
+                <div class="form-group">
+                    <label for="categorySelect" class="form-label">Select New Category</label>
+                    <select id="categorySelect" class="form-control" data-index="{{ index }}">
+                        {% for cat in categories %}
+                        <option value="{{ cat }}" {% if cat == transaction.category %}selected{% endif %}>
+                            {{ cat | capitalize }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <button id="updateCategoryBtn" class="btn btn-primary">
+                    Update Category
+                </button>
+            </div>
+            
+            <!-- Navigation -->
+            <div style="display: flex; gap: 12px; margin-top: 30px;">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-accent" style="flex: 1; text-decoration: none;">
+                    ← Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

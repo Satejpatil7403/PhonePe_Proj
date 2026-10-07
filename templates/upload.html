@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Statement - Transaction Analyzer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script defer src="https://cdn.vercel-insights.com/v1/script.debug.js"></script>
+</head>
+<body>
+    <div class="upload-container">
+        <div class="upload-main">
+            <div class="upload-header">
+                <h1 class="upload-title">Transaction Analyzer</h1>
+                <p class="upload-subtitle">Upload your PDF statement for financial insights</p>
+            </div>
+            
+            <form id="uploadForm" enctype="multipart/form-data">
+                <!-- File Upload Box -->
+                <div id="fileUploadBox" class="file-upload-box">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                    </svg>
+                    <h3 class="upload-box-title">Upload PDF Statement</h3>
+                    <p class="upload-box-text">Click to browse or drag and drop</p>
+                    <p class="upload-box-limit">PDF files only (max 16MB)</p>
+                    <p id="fileName" class="upload-file-name"></p>
+                    <input type="file" id="pdfFile" name="pdf_file" accept=".pdf" required>
+                </div>
+                
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label for="pdfPassword" class="form-label">Password (Optional)</label>
+                    <input 
+                        type="password" 
+                        id="pdfPassword" 
+                        name="password" 
+                        class="form-control" 
+                        placeholder="Enter password if protected"
+                    >
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-large">
+                    Analyze Statement
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
